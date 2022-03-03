@@ -6,7 +6,7 @@
 #    By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 22:41:32 by nargouse          #+#    #+#              #
-#    Updated: 2022/03/03 20:32:00 by nargouse         ###   ########.fr        #
+#    Updated: 2022/03/03 20:59:03 by nargouse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,15 @@ NAME	= philo
 INCLUDE = ./include/
 CFLAGS	+= -Wall -Werror -Wextra
 
-FILES	= 
+FILES	= main.c
 
 SRCS	= $(addprefix ./srcs/, $(FILES))
 OBJS	= $(addprefix ./objs/, $(FILES:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(MLX) $(LIBFT) $(OBJS)
-	$(CC) $(OBJS) $(LIB) $(CFLAGS) $(LFLAGS) -o $@
+$(NAME): $(OBJS)
+	$(CC) $(OBJS) $(CFLAGS) -o $@
 
 objs/%.o: srcs/%.c
 	mkdir -p ./objs/
@@ -36,4 +36,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY:	all bonus clean fclean re
+.PHONY:	all clean fclean re
