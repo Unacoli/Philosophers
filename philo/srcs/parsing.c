@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:43:34 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/15 16:56:58 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/16 17:49:20 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ int	parsing(int ac, char **av, t_rules *rules)
 	rules->die_time = ft_atoi(av[2]);
 	rules->eat_time = ft_atoi(av[3]);
 	rules->sleep_time = ft_atoi(av[4]);
-	if (!rules->nbr_philo || !rules->die_time || !rules->eat_time
-		|| !rules->sleep_time)
+	if (rules->nbr_philo < 0 || rules->die_time < 0 || rules->eat_time < 0
+		|| rules->sleep_time < 0)
 		return (-1);
-	if (ac > 5)
+	if (ac == 6)
 	{
 		rules->eat_count = ft_atoi(av[5]);
-		if (!rules->eat_count)
+		if (rules->eat_count < 0)
 			return (-1);
 	}
 	else
