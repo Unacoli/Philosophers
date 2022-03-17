@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/16 19:16:22 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:24:37 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static t_philo	*init_philo(t_rules *rules, t_philo *philo, pthread_mutex_t *fork
 		philo[i].nbr_eat = 0;
 		philo[i].id = i + 1;
 		philo[i].rules = rules;
+		philo[i].dead = 0;
 		philo[i].l_fork = forks[i];
 		if (i != rules->nbr_philo - 1)
 			philo[i].r_fork = forks[i + 1];
@@ -61,7 +62,6 @@ int	thread_handling(t_rules *rules)
 	pthread_mutex_t	**forks;
 	int				i;
 
-	i = 0;
 	forks = NULL;
 	forks = init_forks(rules, forks);
 	if (!forks)
@@ -71,6 +71,7 @@ int	thread_handling(t_rules *rules)
 	if (!philo)
 		return (-1);
 	gettimeofday(&rules->init_time, NULL);
+	i = 0;
 	while (i < rules->nbr_philo)
 	{
 		philo[i].last_eat = rules->init_time;

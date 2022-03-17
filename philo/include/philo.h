@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:33:14 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/16 18:27:39 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 16:28:24 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ typedef struct	s_philo
 	pthread_t	thread_id;
 	int	id;
 	int	nbr_eat;
+	int	dead;
 	pthread_mutex_t	r_fork;
 	pthread_mutex_t	l_fork;
+	pthread_mutex_t	talk;
 	struct timeval last_eat;
 }				t_philo;
 
@@ -54,5 +56,8 @@ int	error(const char *str);
 int	parsing(int ac, char **av, t_rules *rules);
 int	thread_handling(t_rules *rules);
 void	*life(void *phil);
+long long	get_time(void);
+void	my_wait(int time, t_philo *philo);
+int	is_dead(t_philo *philo);
 
 #endif
