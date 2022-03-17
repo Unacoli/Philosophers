@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:43:34 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 16:18:15 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:12:34 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	is_num(int ac, char **av)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 1;
 	while (i < ac)
 	{
 		j = 0;
@@ -40,15 +40,8 @@ int	parsing(int ac, char **av, t_rules *rules)
 	rules->die_time = ft_atoi(av[2]);
 	rules->eat_time = ft_atoi(av[3]);
 	rules->sleep_time = ft_atoi(av[4]);
-//	if (rules->nbr_philo < 0 || rules->die_time < 0 || rules->eat_time < 0
-//		|| rules->sleep_time < 0)
-//		return (-1);
 	if (ac == 6)
-	{
 		rules->eat_count = ft_atoi(av[5]);
-		if (rules->eat_count < 0)
-			return (-1);
-	}
 	else
 		rules->eat_count = -1;
 	return (0);

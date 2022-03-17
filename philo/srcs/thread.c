@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 16:24:37 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:38:32 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,26 @@ static pthread_mutex_t	**init_forks(t_rules *rules, pthread_mutex_t **forks)
 	return (forks);
 }
 
-static t_philo	*init_philo(t_rules *rules, t_philo *philo, pthread_mutex_t *forks)
+static pthread_mutex_t	*init_talk(t_rules *rules, t_philo *philo)
+{
+	pthread_mutex_t	*talk;
+	int				i;
+
+	talk = malloc(sizeof(pthread_mutex_t));
+	if (!talk)
+		return (NULL);
+	i = 0;
+	while (i < rules->nbr_philo)
+	{
+		pthread_mutex_init(talk, NULL);
+		philo[i].talk = talk;
+		i++;
+	}
+	return (talk);
+}
+
+static t_philo	*init_philo(t_rules *rules, t_philo *philo,
+		pthread_mutex_t **forks)
 {
 	int	i;
 
@@ -52,7 +71,8 @@ static t_philo	*init_philo(t_rules *rules, t_philo *philo, pthread_mutex_t *fork
 			philo[i].r_fork = forks[0];
 		i++;
 	}
-	free(forks);
+	if (init_talk(rules, philo) == NULL)
+		return (NULL);
 	return (philo);
 }
 
@@ -64,19 +84,20 @@ int	thread_handling(t_rules *rules)
 
 	forks = NULL;
 	forks = init_forks(rules, forks);
-	if (!forks)
+	if (forks == NULL)
 		return (-1);
 	philo = NULL;
-	philo = init_philo(rules, philo, *forks);
-	if (!philo)
-		return (-1);
-	gettimeofday(&rules->init_time, NULL);
+	philo = init_philo(rules, philo, forks);
+	if (philo == NULL)
+		return (quit(rules, forks, philo, -1));
+	rules->init_time = get_time();
 	i = 0;
 	while (i < rules->nbr_philo)
 	{
 		philo[i].last_eat = rules->init_time;
-		if (pthread_create(&(philo[i].thread_id), NULL, &life, &(philo[i])))
-			return (-1);
+		if (pthread_create(&(philo[i].thread_id), NULL, life, &(philo[i])))
+			return (quit(rules, forks, philo, -1));
+		philo[i].last_eat = get_time();
 		i++;
 	}
 	return (0);

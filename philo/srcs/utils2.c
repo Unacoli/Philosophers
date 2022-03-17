@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/17 17:17:00 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 18:05:37 by nargouse         ###   ########.fr       */
+/*   Created: 2022/03/17 17:32:03 by nargouse          #+#    #+#             */
+/*   Updated: 2022/03/17 18:04:32 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret)
+void	unlock_forks(t_philo *philo)
 {
-	int	i;
+	pthread_mutex_unlock(philo->l_fork);
+	pthread_mutex_unlock(philo->r_fork);
+}
 
-	i = 0;
-	if (forks)
+void	philo_talk(t_philo *philo, char *message, int id)
+{
+	pthread_mutex_lock(philo->talk);
+	if (is_dead(philo) != 1)
 	{
-		while (i < rules->nbr_philo)
-		{
-			pthread_mutex_destroy(forks[i]);
-			if (forks[i])
-				free(forks[i]);
-			i++;
-		}
-		free(forks);
+		printf("%lli %d %s\n", get_time() - philo->rules->init_time,
+			id, message);
 	}
-	if (philo)
-	{
-		pthread_mutex_destroy(philo[0].talk);
-		free(philo[0].talk);
-		free(philo);
-	}
-	return (ret);
+	pthread_mutex_unlock(philo->talk);
 }

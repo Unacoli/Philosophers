@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:33:14 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 16:28:24 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:03:57 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct	s_rules
 	int	eat_time;
 	int	sleep_time;
 	int	eat_count;
-	struct timeval init_time;
+	long long init_time;
 }				t_rules;
 
 
@@ -45,10 +45,10 @@ typedef struct	s_philo
 	int	id;
 	int	nbr_eat;
 	int	dead;
-	pthread_mutex_t	r_fork;
-	pthread_mutex_t	l_fork;
-	pthread_mutex_t	talk;
-	struct timeval last_eat;
+	pthread_mutex_t	*r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*talk;
+	long long last_eat;
 }				t_philo;
 
 int	ft_atoi(const char *str);
@@ -58,6 +58,9 @@ int	thread_handling(t_rules *rules);
 void	*life(void *phil);
 long long	get_time(void);
 void	my_wait(int time, t_philo *philo);
+void	philo_talk(t_philo *philo, char *message, int id);
+void	unlock_forks(t_philo *philo);
 int	is_dead(t_philo *philo);
+int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret);
 
 #endif
