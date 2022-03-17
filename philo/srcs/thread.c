@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 18:38:32 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/17 18:53:58 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	thread_handling(t_rules *rules)
 	i = 0;
 	while (i < rules->nbr_philo)
 	{
-		philo[i].last_eat = rules->init_time;
 		if (pthread_create(&(philo[i].thread_id), NULL, life, &(philo[i])))
 			return (quit(rules, forks, philo, -1));
 		philo[i].last_eat = get_time();
