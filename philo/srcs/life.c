@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 19:15:51 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:21:48 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 static void	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
-	philo_talk(philo, "has taken a fork\n", philo->id);
+	philo_talk(philo, "has taken a fork", philo->id);
 	pthread_mutex_lock(philo->r_fork);
 	philo_talk(philo, "has taken a fork", philo->id);
-	pthread_mutex_lock(philo->talk);
-	philo_talk(philo, "is eating\n", philo->id);
+	philo_talk(philo, "is eating", philo->id);
 	philo->last_eat = get_time();
-	pthread_mutex_unlock(philo->talk);
 	my_wait(philo->rules->eat_time, philo);
 	(philo->nbr_eat)--;
 	unlock_forks(philo);
@@ -38,9 +36,11 @@ void	*life(void *phil)
 	{
 		printf("%lli\n", philo->rules->init_time);
 		eat(philo);
+		if (all_eat(philo) == 1)
+			break ;
 		philo_talk(philo, "is sleeping", philo->id);
 		my_wait(philo->rules->sleep_time, philo);
 		philo_talk(philo, "is thinking", philo->id);
 	}
-	return (NULL);
+	return (0);
 }

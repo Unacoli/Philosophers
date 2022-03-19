@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:33:14 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 19:03:42 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/19 17:33:18 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ void	philo_talk(t_philo *philo, char *message, int id);
 void	unlock_forks(t_philo *philo);
 int	is_dead(t_philo *philo);
 int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret);
+int	all_eat(t_philo *philo);
 
 #endif
