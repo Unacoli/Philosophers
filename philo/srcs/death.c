@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:12:01 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/19 17:32:53 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/21 03:28:50 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	all_eat(t_philo *philo)
 	int	i;
 
 	i = 0;
-	while (philo[i])
+	if (philo[0].rules->eat_count <= 0)
+		return (0);
+	while (i < philo->rules->nbr_philo)
 	{
-		if (philo[i]->nbr_eat != 0)
+		if (philo[i].nbr_eat != 0)
 			return (-1);
 	}
 	return (1);
@@ -27,20 +29,12 @@ int	all_eat(t_philo *philo)
 
 int	is_dead(t_philo *philo)
 {
-	int	i;
-
-	i = 0;
-	if (all_eat(philo) != 1)
+	if (get_time() - philo->rules->init_time > philo->rules->die_time)
 	{
-		while (i < philo->rules->nbr_philo)
-		{
-			if (get_time() - philo[i].last_eat > philo->rules->die_time)
-			{
-				philo_talk(philo, "died", philo[i].id);
-				return (-1);
-			}
-			i++;
-		}
+		philo->dead = 1;
+		philo_talk(philo, "died", philo->id);
+		unlock_forks(philo);
+		return (1);
 	}
 	return (0);
 }

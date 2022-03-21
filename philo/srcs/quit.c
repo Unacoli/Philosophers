@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 17:17:00 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 18:05:37 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/21 02:56:40 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret)
 	int	i;
 
 	i = 0;
+	while (i < philo->rules->nbr_philo)
+		pthread_join(philo[i].thread_id, NULL);
 	if (forks)
 	{
 		while (i < rules->nbr_philo)

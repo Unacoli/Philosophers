@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 18:53:58 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/21 02:57:11 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_philo	*init_philo(t_rules *rules, t_philo *philo,
 		return (NULL);
 	while (i < rules->nbr_philo)
 	{
-		philo[i].nbr_eat = 0;
+		philo[i].nbr_eat = rules->eat_count;
 		philo[i].id = i + 1;
 		philo[i].rules = rules;
 		philo[i].dead = 0;
@@ -90,8 +90,8 @@ int	thread_handling(t_rules *rules)
 	philo = init_philo(rules, philo, forks);
 	if (philo == NULL)
 		return (quit(rules, forks, philo, -1));
-	rules->init_time = get_time();
 	i = 0;
+	rules->init_time = get_time();
 	while (i < rules->nbr_philo)
 	{
 		if (pthread_create(&(philo[i].thread_id), NULL, life, &(philo[i])))
@@ -99,5 +99,7 @@ int	thread_handling(t_rules *rules)
 		philo[i].last_eat = get_time();
 		i++;
 	}
+	is_dead(philo);
+	quit(rules, forks, philo, 0);
 	return (0);
 }

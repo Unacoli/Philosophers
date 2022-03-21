@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:16:16 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/17 18:03:17 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/21 03:28:02 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	my_wait(int time, t_philo *philo)
 {
 	long long	wait;
 
+	(void)philo;
 	wait = get_time() + time;
-	while (get_time() < wait && is_dead(philo) != 1)
+	while (get_time() < wait)
 		usleep(time);
 }
 
