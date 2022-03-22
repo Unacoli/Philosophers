@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:33:14 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/21 03:24:36 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/22 20:24:09 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct	s_philo
 	pthread_t	thread_id;
 	int	id;
 	int	nbr_eat;
-	int	dead;
+	int	*dead;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*talk;

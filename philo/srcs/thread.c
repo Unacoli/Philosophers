@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/21 02:57:11 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/22 20:29:15 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,18 @@ static pthread_mutex_t	*init_talk(t_rules *rules, t_philo *philo)
 {
 	pthread_mutex_t	*talk;
 	int				i;
+	int				*dead;
 
 	talk = malloc(sizeof(pthread_mutex_t));
 	if (!talk)
 		return (NULL);
+	dead = malloc(sizeof(int));
 	i = 0;
 	while (i < rules->nbr_philo)
 	{
 		pthread_mutex_init(talk, NULL);
 		philo[i].talk = talk;
+		philo[i].dead = dead;
 		i++;
 	}
 	return (talk);

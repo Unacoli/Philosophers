@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/21 03:29:29 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/22 20:52:24 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ void	*life(void *phil)
 	while (is_dead(philo) != 1)
 	{
 		eat(philo);
-//		if (all_eat(philo) == 1)
-//			break ;
+		if (all_eat(philo) == 1)
+			break ;
 		philo_talk(philo, "is sleeping", philo->id);
 		my_wait(philo->rules->sleep_time, philo);
 		philo_talk(philo, "is thinking", philo->id);
