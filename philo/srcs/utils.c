@@ -6,11 +6,26 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:16:16 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/21 03:28:02 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:42:55 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	philo_talk(t_philo *philo, char *message, int id)
+{
+	if (one_dead(philo) != -1)
+	{
+		pthread_mutex_lock(philo->talk);
+		printf("[%lli] ", get_time() - philo->rules->init_time);
+		printf("%d ", id);
+		printf("%s\n", message);
+		pthread_mutex_unlock(philo->talk);
+	}
+	else
+		return (-1);
+	return (0);
+}
 
 long long	get_time(void)
 {
@@ -22,28 +37,26 @@ long long	get_time(void)
 	return (time);
 }
 
-void	my_wait(int time, t_philo *philo)
+int	my_wait(int time, t_philo *philo)
 {
 	long long	wait;
 
-	(void)philo;
 	wait = get_time() + time;
 	while (get_time() < wait)
+	{
 		usleep(time);
+		if (one_dead(philo))
+			return (-1);
+	}
+	if (one_dead(philo))
+		return (-1);
+	return (0);
 }
 
 int	error(const char *str)
 {
 	printf("%s\n", str);
 	return (EXIT_FAILURE);
-}
-
-static int	ft_if(int s)
-{
-	if (s > 0)
-		return (-1);
-	else
-		return (0);
 }
 
 int	ft_atoi(const char *str)
@@ -67,7 +80,5 @@ int	ft_atoi(const char *str)
 		n = n * 10 + (str[i] - '0');
 		i++;
 	}
-	if (n > LONG_MAX)
-		return (ft_if(s));
 	return (n * s);
 }

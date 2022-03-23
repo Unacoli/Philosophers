@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:33:14 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/22 20:24:09 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/23 02:38:57 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,22 @@ typedef struct	s_philo
 }				t_philo;
 
 int	ft_atoi(const char *str);
-int	error(const char *str);
-int	parsing(int ac, char **av, t_rules *rules);
-int	thread_handling(t_rules *rules);
-void	*life(void *phil);
+int	my_wait(int time, t_philo *philo);
 long long	get_time(void);
-void	my_wait(int time, t_philo *philo);
-void	philo_talk(t_philo *philo, char *message, int id);
-void	unlock_forks(t_philo *philo);
-int	is_dead(t_philo *philo);
-int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret);
+int	error(const char *str);
+int	philo_talk(t_philo *philo, char *message, int id);
+
+int	parsing(int ac, char **av, t_rules *rules);
+
+int	thread_handling(t_rules *rules);
+void	*base_thread(void *phil);
+void	*life(void *phil);
+
 int	all_eat(t_philo *philo);
+int	one_dead(t_philo *philo);
+int	is_dead(t_philo *philo);
+
+int	unlock_forks(t_philo *philo);
+int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret);
 
 #endif

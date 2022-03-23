@@ -6,7 +6,7 @@
 #    By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/31 22:41:32 by nargouse          #+#    #+#              #
-#    Updated: 2022/03/17 18:04:59 by nargouse         ###   ########.fr        #
+#    Updated: 2022/03/23 02:45:20 by nargouse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= philo
 INCLUDE = ./include/
 CFLAGS	+= -Wall -Werror -Wextra -pthread -g3
 
-FILES	= main.c parsing.c utils.c thread.c life.c death.c utils2.c quit.c
+FILES	= main.c parsing.c init_threads.c thread.c life.c death.c quit.c utils.c
 
 SRCS	= $(addprefix ./srcs/, $(FILES))
 OBJS	= $(addprefix ./objs/, $(FILES:.c=.o))

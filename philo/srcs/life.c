@@ -6,23 +6,46 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/22 20:52:24 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/22 23:41:26 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static void	eat(t_philo *philo)
+static int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
-	philo_talk(philo, "has taken a fork", philo->id);
+	if (philo_talk(philo, "has taken a fork", philo->id))
+		return (unlock_forks(philo));
 	pthread_mutex_lock(philo->r_fork);
-	philo_talk(philo, "has taken a fork", philo->id);
-	philo_talk(philo, "is eating", philo->id);
+	if (philo_talk(philo, "has taken a fork", philo->id))
+		return (unlock_forks(philo));
+	if (philo_talk(philo, "is eating", philo->id))
+		return (unlock_forks(philo));
 	philo->last_eat = get_time();
-	my_wait(philo->rules->eat_time, philo);
-	(philo->nbr_eat)--;
+	if (my_wait(philo->rules->eat_time, philo))
+		return (unlock_forks(philo));
+	(philo->nbr_eat)++;
 	unlock_forks(philo);
+	return (0);
+}
+
+static int	start_eat(t_philo *philo)
+{
+	if (philo->id % 2)
+	{
+		if (eat(philo))
+			return (-1);
+	}
+	else
+	{
+		if (get_time() - philo->last_eat < philo->rules->eat_time / 5)
+			if (my_wait(philo->rules->eat_time / 5, philo))
+				return (-1);
+		if (eat(philo))
+			return (-1);
+	}
+	return (0);
 }
 
 void	*life(void *phil)
@@ -30,16 +53,18 @@ void	*life(void *phil)
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
-	if (philo->id % 2)
-		usleep(15000);
-	while (is_dead(philo) != 1)
+	if (start_eat(philo))
+		return (NULL);
+	while (1)
 	{
-		eat(philo);
-		if (all_eat(philo) == 1)
-			break ;
-		philo_talk(philo, "is sleeping", philo->id);
-		my_wait(philo->rules->sleep_time, philo);
-		philo_talk(philo, "is thinking", philo->id);
+		if (philo_talk(philo, "is sleeping", philo->id))
+			return (NULL);
+		if (my_wait(philo->rules->sleep_time, philo))
+			return (NULL);
+		if (philo_talk(philo, "is thinking", philo->id))
+			return (NULL);
+		if (eat(philo))
+			return (NULL);
 	}
-	return (0);
+	return (NULL);
 }
