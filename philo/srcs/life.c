@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/22 23:41:26 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/23 03:17:28 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	eat(t_philo *philo)
 	return (0);
 }
 
-static int	start_eat(t_philo *philo)
+static int	choose_eating(t_philo *philo)
 {
 	if (philo->id % 2)
 	{
@@ -53,7 +53,7 @@ void	*life(void *phil)
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
-	if (start_eat(philo))
+	if (choose_eating(philo))
 		return (NULL);
 	while (1)
 	{
