@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 03:17:28 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:37:23 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 static int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->l_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id))
-		return (unlock_forks(philo));
 	pthread_mutex_lock(philo->r_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id))
+	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
+		return (unlock_forks(philo));
+	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
 		return (unlock_forks(philo));
 	if (philo_talk(philo, "is eating", philo->id))
 		return (unlock_forks(philo));

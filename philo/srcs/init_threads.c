@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 03:21:28 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 18:28:58 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,5 @@ int	thread_handling(t_rules *rules)
 		return (quit(rules, forks, philo, -1));
 	if (pthread_join(id, NULL))
 		return (quit(rules, forks, philo, -1));
-	if (all_eat(philo))
-	{
-		pthread_mutex_lock(philo->talk);
-		printf("Philosophers have eaten %d times\n", rules->eat_count);
-		pthread_mutex_unlock(philo->talk);
-	}
 	return (quit(rules, forks, philo, 0));
 }
