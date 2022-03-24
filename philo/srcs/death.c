@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:12:01 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/24 18:44:06 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 21:53:03 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ int	all_eat(t_philo *philo)
 			return (0);
 		i++;
 	}
+	printf("%d\n", philo[0].nbr_eat);
+	printf("%d\n", philo[1].nbr_eat);
+	printf("%d\n", philo->rules->eat_count);
 	return (1);
 }
 
@@ -45,7 +48,9 @@ int	is_dead(t_philo *philo)
 	if (get_time() - philo->last_eat > philo->rules->die_time)
 	{
 		pthread_mutex_lock(philo->talk);
+		pthread_mutex_lock(philo->var_lock);
 		*(philo->dead) = 1;
+		pthread_mutex_unlock(philo->var_lock);
 		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time,
 			philo->id, "died");
 		pthread_mutex_unlock(philo->talk);
