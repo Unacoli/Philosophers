@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/22 23:41:26 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 21:58:43 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 
 static int	eat(t_philo *philo)
 {
+	pthread_mutex_lock(philo->eat);
 	pthread_mutex_lock(philo->l_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id))
+	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
 		return (unlock_forks(philo));
 	pthread_mutex_lock(philo->r_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id))
+	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
 		return (unlock_forks(philo));
+	pthread_mutex_unlock(philo->eat);
 	if (philo_talk(philo, "is eating", philo->id))
 		return (unlock_forks(philo));
 	philo->last_eat = get_time();
 	if (my_wait(philo->rules->eat_time, philo))
 		return (unlock_forks(philo));
+	pthread_mutex_lock(philo->var_lock);
 	(philo->nbr_eat)++;
+	pthread_mutex_unlock(philo->var_lock);
 	unlock_forks(philo);
 	return (0);
 }
 
-static int	start_eat(t_philo *philo)
+static int	choose_eating(t_philo *philo)
 {
 	if (philo->id % 2)
 	{
@@ -53,7 +57,7 @@ void	*life(void *phil)
 	t_philo	*philo;
 
 	philo = (t_philo *)phil;
-	if (start_eat(philo))
+	if (choose_eating(philo))
 		return (NULL);
 	while (1)
 	{

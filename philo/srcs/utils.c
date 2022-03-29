@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:16:16 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 02:42:55 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 19:01:54 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,15 @@
 
 int	philo_talk(t_philo *philo, char *message, int id)
 {
-	if (one_dead(philo) != -1)
+	if (one_dead(philo) == -1)
+		return (-1);
+	else
 	{
 		pthread_mutex_lock(philo->talk);
-		printf("[%lli] ", get_time() - philo->rules->init_time);
-		printf("%d ", id);
-		printf("%s\n", message);
+		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time,
+			id, message);
 		pthread_mutex_unlock(philo->talk);
 	}
-	else
-		return (-1);
 	return (0);
 }
 
@@ -41,10 +40,9 @@ int	my_wait(int time, t_philo *philo)
 {
 	long long	wait;
 
-	wait = get_time() + time;
-	while (get_time() < wait)
+	wait = get_time();
+	while (get_time() - wait < time)
 	{
-		usleep(time);
 		if (one_dead(philo))
 			return (-1);
 	}

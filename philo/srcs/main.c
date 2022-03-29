@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:32:18 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 02:23:13 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 18:32:11 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int ac, char **av)
 		return (error("Wrong number of arguments"));
 	if (parsing(ac, av, &rules))
 		return (error("Parsing error, check value of arguments"));
+	if (rules.eat_count == 0)
+		return (EXIT_SUCCESS);
 	if (thread_handling(&rules))
 		return (error("Error on thread creation or on runtime."));
 	return (EXIT_SUCCESS);

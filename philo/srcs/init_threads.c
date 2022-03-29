@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread.c                                           :+:      :+:    :+:   */
+/*   init_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:53:50 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 02:32:33 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 21:43:42 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,30 @@ static pthread_mutex_t	**init_forks(t_rules *rules, pthread_mutex_t **forks)
 		i++;
 	}
 	return (forks);
+}
+
+static int	init_mutex(t_rules *rules, t_philo *philo)
+{
+	pthread_mutex_t	*eat;
+	pthread_mutex_t	*var_lock;
+	int				i;
+
+	eat = malloc(sizeof(pthread_mutex_t));
+	if (!eat)
+		return (-1);
+	var_lock = malloc(sizeof(pthread_mutex_t));
+	if (!var_lock)
+		return (-1);
+	i = 0;
+	while (i < rules->nbr_philo)
+	{
+		pthread_mutex_init(var_lock, NULL);
+		philo[i].var_lock = var_lock;
+		pthread_mutex_init(eat, NULL);
+		philo[i].eat = eat;
+		i++;
+	}
+	return (0);
 }
 
 static int	init_talk(t_rules *rules, t_philo *philo)
@@ -78,6 +102,8 @@ static t_philo	*init_philo(t_rules *rules, t_philo *philo,
 	}
 	if (init_talk(rules, philo) == -1)
 		return (NULL);
+	if (init_mutex(rules, philo) == -1)
+		return (NULL);
 	return (philo);
 }
 
@@ -99,7 +125,5 @@ int	thread_handling(t_rules *rules)
 		return (quit(rules, forks, philo, -1));
 	if (pthread_join(id, NULL))
 		return (quit(rules, forks, philo, -1));
-	if (all_eat(philo))
-		printf("Philosophers have eaten %d times\n", rules->eat_count);
 	return (quit(rules, forks, philo, 0));
 }

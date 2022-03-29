@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   base_thread.c                                      :+:      :+:    :+:   */
+/*   thread.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 23:15:39 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/23 02:40:46 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/24 21:34:05 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	*base_thread(void *phil)
 		return (NULL);
 	while (1)
 	{
-		if (all_eat(philo))
-			return (NULL);
+		if (all_eat(philo) == 1)
+			break ;
 		i = -1;
 		while (++i < philo->rules->nbr_philo)
 		{
@@ -51,8 +51,8 @@ void	*base_thread(void *phil)
 					pthread_join(philo[j].thread_id, NULL);
 				return (NULL);
 			}
+			i++;
 		}
-		usleep(5000);
 	}
 	return (philo);
 }
