@@ -16,7 +16,7 @@ static pthread_mutex_t	**init_forks(t_rules *rules, pthread_mutex_t **forks)
 {
 	int	i;
 
-	forks = malloc(rules->nbr_philo * sizeof(pthread_mutex_t));
+	forks = malloc(rules->nbr_philo * sizeof(pthread_mutex_t *));
 	if (!forks)
 		return (NULL);
 	i = 0;
