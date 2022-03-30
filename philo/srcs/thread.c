@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 23:15:39 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/24 21:34:05 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/30 15:30:21 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	*base_thread(void *phil)
 	while (1)
 	{
 		if (all_eat(philo) == 1)
-			break ;
+			*(philo->dead) = 1;
 		i = -1;
 		while (++i < philo->rules->nbr_philo)
 		{
