@@ -28,6 +28,13 @@ static int	thread_life(t_rules *rules, t_philo *philo)
 	return (0);
 }
 
+static void	lock(t_philo *philo)
+{
+	pthread_mutex_lock(philo->m_dead);
+	*(philo->dead) = 1;
+	pthread_mutex_unlock(philo->m_dead);
+}
+
 void	*base_thread(void *phil)
 {
 	t_philo	*philo;
@@ -40,7 +47,7 @@ void	*base_thread(void *phil)
 	while (1)
 	{
 		if (all_eat(philo) == 1)
-			*(philo->dead) = 1;
+			lock(philo);
 		i = -1;
 		while (++i < philo->rules->nbr_philo)
 		{

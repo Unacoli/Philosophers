@@ -14,7 +14,6 @@
 
 int	unlock_forks(t_philo *philo)
 {
-	pthread_mutex_unlock(philo->eat);
 	pthread_mutex_unlock(philo->l_fork);
 	pthread_mutex_unlock(philo->r_fork);
 	return (-1);
@@ -26,10 +25,12 @@ static	void	free_mutex(t_philo *philo)
 	{
 		pthread_mutex_destroy(philo->talk);
 		free(philo->talk);
-		pthread_mutex_destroy(philo->var_lock);
-		free(philo->var_lock);
+		pthread_mutex_destroy(philo->m_dead);
+		free(philo->m_dead);
 		pthread_mutex_destroy(philo->eat);
 		free(philo->eat);
+		pthread_mutex_destroy(philo->time);
+		free(philo->time);
 		if (philo->dead)
 			free(philo->dead);
 		free(philo);

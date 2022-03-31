@@ -19,8 +19,7 @@ int	philo_talk(t_philo *philo, char *message, int id)
 	else
 	{
 		pthread_mutex_lock(philo->talk);
-		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time,
-			id, message);
+		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time, id, message);
 		pthread_mutex_unlock(philo->talk);
 	}
 	return (0);

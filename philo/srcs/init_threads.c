@@ -34,22 +34,28 @@ static pthread_mutex_t	**init_forks(t_rules *rules, pthread_mutex_t **forks)
 static int	init_mutex(t_rules *rules, t_philo *philo)
 {
 	pthread_mutex_t	*eat;
-	pthread_mutex_t	*var_lock;
+	pthread_mutex_t	*m_dead;
+	pthread_mutex_t	*time;
 	int				i;
 
 	eat = malloc(sizeof(pthread_mutex_t));
 	if (!eat)
 		return (-1);
-	var_lock = malloc(sizeof(pthread_mutex_t));
-	if (!var_lock)
+	m_dead = malloc(sizeof(pthread_mutex_t));
+	if (!m_dead)
+		return (-1);
+	time = malloc(sizeof(pthread_mutex_t));
+	if (!time)
 		return (-1);
 	i = 0;
 	while (i < rules->nbr_philo)
 	{
-		pthread_mutex_init(var_lock, NULL);
-		philo[i].var_lock = var_lock;
+		pthread_mutex_init(m_dead, NULL);
+		philo[i].m_dead = m_dead;
 		pthread_mutex_init(eat, NULL);
 		philo[i].eat = eat;
+		pthread_mutex_init(time, NULL);
+		philo[i].time = time;
 		i++;
 	}
 	return (0);

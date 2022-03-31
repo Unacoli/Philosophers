@@ -12,25 +12,35 @@
 
 #include "philo.h"
 
-static int	eat(t_philo *philo)
+static void	last_eating(t_philo *philo)
+{
+	pthread_mutex_lock(philo->time);
+	philo->last_eat = get_time();
+	pthread_mutex_unlock(philo->time);
+}
+
+static void	number_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->eat);
+	(philo->nbr_eat)++;
+	pthread_mutex_unlock(philo->eat);
+}
+
+static int	eat(t_philo *philo)
+{
 	pthread_mutex_lock(philo->l_fork);
 	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
-		return (unlock_forks(philo));
+		return (pthread_mutex_unlock(philo->l_fork));
 	pthread_mutex_lock(philo->r_fork);
 	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
 		return (unlock_forks(philo));
-	pthread_mutex_unlock(philo->eat);
 	if (philo_talk(philo, "is eating", philo->id))
 		return (unlock_forks(philo));
-	philo->last_eat = get_time();
+	last_eating(philo);
 	if (my_wait(philo->rules->eat_time, philo))
 		return (unlock_forks(philo));
-	pthread_mutex_lock(philo->var_lock);
-	(philo->nbr_eat)++;
-	pthread_mutex_unlock(philo->var_lock);
 	unlock_forks(philo);
+	number_eat(philo);
 	return (0);
 }
 
@@ -43,7 +53,7 @@ static int	choose_eating(t_philo *philo)
 	}
 	else
 	{
-		if (get_time() - philo->last_eat < philo->rules->eat_time / 5)
+		if (mutex_time(philo) < philo->rules->eat_time / 5)
 			if (my_wait(philo->rules->eat_time / 5, philo))
 				return (-1);
 		if (eat(philo))

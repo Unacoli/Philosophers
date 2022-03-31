@@ -49,7 +49,8 @@ typedef struct	s_philo
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*talk;
 	pthread_mutex_t	*eat;
-	pthread_mutex_t	*var_lock;
+	pthread_mutex_t	*m_dead;
+	pthread_mutex_t	*time;
 	long long last_eat;
 }				t_philo;
 
@@ -68,6 +69,8 @@ void	*life(void *phil);
 int	all_eat(t_philo *philo);
 int	one_dead(t_philo *philo);
 int	is_dead(t_philo *philo);
+int	dead(t_philo *philo);
+long long	mutex_time(t_philo *philo);
 
 int	unlock_forks(t_philo *philo);
 int	quit(t_rules *rules, pthread_mutex_t **forks, t_philo *philo, int ret);

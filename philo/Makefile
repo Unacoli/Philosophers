@@ -12,7 +12,7 @@
 
 NAME	= philo
 INCLUDE = ./include/
-CFLAGS	+= -Wall -Werror -Wextra -pthread -g3 -fsanitize=thread
+CFLAGS	+= -Wall -Werror -Wextra -pthread
 
 FILES	= main.c parsing.c init_threads.c thread.c life.c death.c quit.c utils.c
 
