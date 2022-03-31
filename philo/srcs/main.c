@@ -6,12 +6,15 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/03 20:32:18 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/24 18:32:11 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 23:10:19 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/syscall.h>
 int	main(int ac, char **av)
 {
 	t_rules	rules;

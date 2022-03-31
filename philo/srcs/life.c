@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/31 20:43:32 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 23:26:31 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,19 +30,24 @@ static void	number_eat(t_philo *philo)
 
 static int	eat(t_philo *philo)
 {
-	pthread_mutex_lock(philo->l_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
-		return (pthread_mutex_unlock(philo->l_fork));
-	pthread_mutex_lock(philo->r_fork);
-	if (philo_talk(philo, "has taken a fork", philo->id) == -1)
-		return (unlock_forks(philo));
-	if (philo_talk(philo, "is eating", philo->id))
-		return (unlock_forks(philo));
-	last_eating(philo);
-	if (my_wait(philo->rules->eat_time, philo))
-		return (unlock_forks(philo));
-	unlock_forks(philo);
-	number_eat(philo);
+	if (one_dead(philo) != -1 || all_eat(philo) != 1)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		if (philo_talk(philo, "has taken a fork", philo->id) == -1)
+			return (pthread_mutex_unlock(philo->l_fork));
+		if (philo->rules->nbr_philo == 1)
+			return (-1);
+		pthread_mutex_lock(philo->r_fork);
+		if (philo_talk(philo, "has taken a fork", philo->id) == -1)
+			return (unlock_forks(philo));
+		if (philo_talk(philo, "is eating", philo->id))
+			return (unlock_forks(philo));
+		last_eating(philo);
+		if (my_wait(philo->rules->eat_time, philo))
+			return (unlock_forks(philo));
+		unlock_forks(philo);
+		number_eat(philo);
+	}
 	return (0);
 }
 
