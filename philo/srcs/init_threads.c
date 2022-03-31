@@ -39,13 +39,9 @@ static int	init_mutex(t_rules *rules, t_philo *philo)
 	int				i;
 
 	eat = malloc(sizeof(pthread_mutex_t));
-	if (!eat)
-		return (-1);
 	m_dead = malloc(sizeof(pthread_mutex_t));
-	if (!m_dead)
-		return (-1);
 	time = malloc(sizeof(pthread_mutex_t));
-	if (!time)
+	if (!eat || !m_dead || !time)
 		return (-1);
 	i = 0;
 	while (i < rules->nbr_philo)
