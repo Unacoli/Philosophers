@@ -14,7 +14,7 @@
 
 int	philo_talk(t_philo *philo, char *message, int id)
 {
-	if (one_dead(philo) == -1)
+	if (one_dead(philo) == -1 || all_eat(philo) == 1)
 		return (-1);
 	else
 	{

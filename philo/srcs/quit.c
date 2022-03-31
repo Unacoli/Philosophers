@@ -12,6 +12,16 @@
 
 #include "philo.h"
 
+void	error_mutex(pthread_mutex_t *a, pthread_mutex_t *b, pthread_mutex_t *c)
+{
+	if (a)
+		free(a);
+	if (b)
+		free(b);
+	if (c)
+		free(c);
+}
+
 int	unlock_forks(t_philo *philo)
 {
 	pthread_mutex_unlock(philo->l_fork);

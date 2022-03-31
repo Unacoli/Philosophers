@@ -40,6 +40,9 @@ int	parsing(int ac, char **av, t_rules *rules)
 	rules->die_time = ft_atoi(av[2]);
 	rules->eat_time = ft_atoi(av[3]);
 	rules->sleep_time = ft_atoi(av[4]);
+	if (rules->nbr_philo <= 0 || rules->die_time <= 0 || rules->eat_time <= 0
+		|| rules->sleep_time <= 0)
+		return (-1);
 	if (ac == 6)
 		rules->eat_count = ft_atoi(av[5]);
 	else

@@ -60,6 +60,8 @@ int			error(const char *str);
 int			philo_talk(t_philo *philo, char *message, int id);
 
 int			parsing(int ac, char **av, t_rules *rules);
+void		error_mutex(pthread_mutex_t *a, pthread_mutex_t *b,
+				pthread_mutex_t *c);
 
 int			thread_handling(t_rules *rules);
 void		*base_thread(void *phil);

@@ -49,7 +49,6 @@ long long	mutex_time(t_philo *philo)
 {
 	long long	temp;
 
-	temp = 0;
 	pthread_mutex_lock(philo->time);
 	temp = get_time() - philo->last_eat;
 	pthread_mutex_unlock(philo->time);

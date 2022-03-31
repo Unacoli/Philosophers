@@ -42,7 +42,10 @@ static int	init_mutex(t_rules *rules, t_philo *philo)
 	m_dead = malloc(sizeof(pthread_mutex_t));
 	time = malloc(sizeof(pthread_mutex_t));
 	if (!eat || !m_dead || !time)
+	{
+		error_mutex(eat, m_dead, time);
 		return (-1);
+	}
 	i = 0;
 	while (i < rules->nbr_philo)
 	{
@@ -68,7 +71,10 @@ static int	init_talk(t_rules *rules, t_philo *philo)
 		return (-1);
 	dead = malloc(sizeof(int));
 	if (!dead)
+	{
+		free(talk);
 		return (-1);
+	}
 	i = 0;
 	*dead = 0;
 	while (i < rules->nbr_philo)
