@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/22 23:15:39 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/30 15:30:21 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:57:25 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ void	*base_thread(void *phil)
 				j = -1;
 				while (++j < philo->rules->nbr_philo)
 					pthread_join(philo[j].thread_id, NULL);
-				return (NULL);
+				return (philo);
 			}
-			i++;
 		}
 	}
 	return (philo);

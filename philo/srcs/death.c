@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 16:12:01 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/30 15:58:08 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:17:34 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	is_dead(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->talk);
 		*(philo->dead) = 1;
-		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time,
+		printf("%lli %d %s\n", get_time() - philo->rules->init_time,
 			philo->id, "died");
 		pthread_mutex_unlock(philo->talk);
 		return (-1);

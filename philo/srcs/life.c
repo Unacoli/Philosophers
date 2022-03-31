@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 17:45:44 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/24 21:58:43 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 20:43:32 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ static void	last_eating(t_philo *philo)
 static void	number_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->eat);
-	(philo->nbr_eat)++;
+	if (philo->nbr_eat <= philo->rules->eat_count
+		&& philo->rules->eat_count != -1)
+		(philo->nbr_eat)++;
 	pthread_mutex_unlock(philo->eat);
 }
 
@@ -69,7 +71,7 @@ void	*life(void *phil)
 	philo = (t_philo *)phil;
 	if (choose_eating(philo))
 		return (NULL);
-	while (1)
+	while (all_eat(philo) != 1)
 	{
 		if (philo_talk(philo, "is sleeping", philo->id))
 			return (NULL);

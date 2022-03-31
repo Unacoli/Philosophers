@@ -6,13 +6,13 @@
 #    By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/29 18:47:30 by nargouse          #+#    #+#              #
-#    Updated: 2022/03/29 18:53:33 by nargouse         ###   ########.fr        #
+#    Updated: 2022/03/31 20:25:11 by nargouse         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= philo
 INCLUDE = ./include/
-CFLAGS	+= -Wall -Werror -Wextra -pthread
+CFLAGS	+= -Wall -Werror -Wextra -pthread -g3
 
 FILES	= main.c parsing.c init_threads.c thread.c life.c death.c quit.c utils.c
 

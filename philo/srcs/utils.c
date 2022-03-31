@@ -6,7 +6,7 @@
 /*   By: nargouse <nargouse@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 16:16:16 by nargouse          #+#    #+#             */
-/*   Updated: 2022/03/24 19:01:54 by nargouse         ###   ########.fr       */
+/*   Updated: 2022/03/31 21:17:18 by nargouse         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	philo_talk(t_philo *philo, char *message, int id)
 	else
 	{
 		pthread_mutex_lock(philo->talk);
-		printf("[%lli] %d %s\n", get_time() - philo->rules->init_time,
+		printf("%lli %d %s\n", get_time() - philo->rules->init_time,
 			id, message);
 		pthread_mutex_unlock(philo->talk);
 	}
