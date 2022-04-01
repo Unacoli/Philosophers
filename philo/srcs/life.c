@@ -22,7 +22,7 @@ static void	last_eating(t_philo *philo)
 static void	number_eat(t_philo *philo)
 {
 	pthread_mutex_lock(philo->eat);
-	if (philo->nbr_eat <= philo->rules->eat_count
+	if (philo->nbr_eat < philo->rules->eat_count
 		&& philo->rules->eat_count != -1)
 		(philo->nbr_eat)++;
 	pthread_mutex_unlock(philo->eat);
